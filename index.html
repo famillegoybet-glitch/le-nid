@@ -25,17 +25,17 @@ img{max-width:100%}
 :root{
   --bg:#FFF6F1; --surface:#FFFFFF; --ink:#2A2320; --muted:#7B6A62; --line:#F0DCD2;
   --accent:#2E6A5C; --accent-ink:#FFFFFF; --honey:#E8A33D; --honey-soft:#FCEBCB; --danger:#B4452F;
-  --tint:#E6F0ED; --noel:#B23A3A; --noel-soft:#FBE7E2; --noel-line:#F3CFC6;
+  --tint:#E6F0ED; --chart:#12896B; --noel:#B23A3A; --noel-soft:#FBE7E2; --noel-line:#F3CFC6;
   --font-display:"Bricolage Grotesque",ui-rounded,"Segoe UI",system-ui,sans-serif;
   --font-body:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
   --r:14px;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:#1C1816; --surface:#272120; --ink:#F6ECE6; --muted:#B9A79E; --line:#3A302C;
-  --accent:#6CBFA8; --accent-ink:#10231E; --honey:#F0B85C; --honey-soft:#3A2E1B; --danger:#E88870; --tint:#1F3530; --noel:#F08C7E; --noel-soft:#3A2220; --noel-line:#53302C; color-scheme:dark}}
+  --accent:#6CBFA8; --accent-ink:#10231E; --honey:#F0B85C; --honey-soft:#3A2E1B; --danger:#E88870; --tint:#1F3530; --chart:#22A884; --noel:#F08C7E; --noel-soft:#3A2220; --noel-line:#53302C; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#1C1816; --surface:#272120; --ink:#F6ECE6; --muted:#B9A79E; --line:#3A302C;
-  --accent:#6CBFA8; --accent-ink:#10231E; --honey:#F0B85C; --honey-soft:#3A2E1B; --danger:#E88870; --tint:#1F3530; --noel:#F08C7E; --noel-soft:#3A2220; --noel-line:#53302C; color-scheme:dark}
+  --accent:#6CBFA8; --accent-ink:#10231E; --honey:#F0B85C; --honey-soft:#3A2E1B; --danger:#E88870; --tint:#1F3530; --chart:#22A884; --noel:#F08C7E; --noel-soft:#3A2220; --noel-line:#53302C; color-scheme:dark}
 html,body{background:var(--bg);color:var(--ink)}
 body{font-family:var(--font-body);font-size:16px;line-height:1.5;padding-inline:16px;padding-block:0 100px}
 .wrap{max-width:640px;margin-inline:auto}
@@ -59,6 +59,31 @@ nav.tabs{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border
 nav.tabs .in{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:2px;width:100%;max-width:640px}
 nav.tabs button{border:0;background:none;padding:7px 2px;border-radius:12px;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11.5px;font-weight:600;color:var(--muted)}
 nav.tabs button[aria-selected="true"]{color:var(--accent);background:var(--tint)}
+nav.tabs button{position:relative}
+.dot-new{position:absolute;top:4px;left:calc(50% + 7px);width:10px;height:10px;border-radius:50%;background:var(--danger);box-shadow:0 0 0 2px var(--surface)}
+.new-tag{font-size:11px;font-weight:700;color:var(--surface);background:var(--danger);border-radius:999px;padding:1px 7px}
+.notif-card{display:flex;gap:12px;align-items:center;background:var(--tint);border-radius:var(--r);padding:12px 14px}
+.notif-card p{margin:0;font-size:14px;flex:1;min-width:0}
+.notif-card .x{border:0;background:none;color:var(--muted);font-size:20px;line-height:1;padding:4px}
+.checkline{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line);cursor:pointer}
+.checkline input{width:22px;height:22px;flex:none;accent-color:var(--accent);margin-top:1px}
+.checkline small{display:block;color:var(--muted);font-size:13px}
+.kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px}
+.kpi b{display:block;font-family:var(--font-display);font-size:28px;line-height:1.1;font-variant-numeric:tabular-nums}
+.kpi span{font-size:13px;color:var(--muted)}
+.chart-wrap{overflow-x:auto}
+.chart-wrap svg{display:block;width:100%;height:auto}
+.chart-wrap svg text{font-family:var(--font-body);font-size:11px;fill:var(--muted)}
+.chart-wrap .grid{stroke:var(--line);stroke-width:1}
+.chart-wrap .bar{fill:var(--chart)}
+.chart-wrap .bar:hover{opacity:.8}
+.stbl{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
+.stbl th{font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);text-align:left;font-weight:600;padding:6px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+.stbl td{padding:8px;border-bottom:1px solid var(--line);white-space:nowrap}
+.stbl td.num,.stbl th.num{text-align:right}
+.meter{height:10px;border-radius:999px;background:var(--line);overflow:hidden}
+.meter i{display:block;height:100%;background:var(--chart);border-radius:999px}
 
 .stack{display:flex;flex-direction:column;gap:14px}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px}
@@ -270,10 +295,11 @@ nav.tabs button[aria-selected="true"]{color:var(--accent);background:var(--tint)
     tab:"fil", famille:"annuaire", plus:"infos", albumOpen:null, recipeOpen:null,
     month:null, day:null, q:"", cat:"Tout", readOnly:false, unlocked:false,
     me:"", openComments:new Set(), draft:"", draftFiles:[], busy:false,
-    annonces:[], loaded:new Set(), agf:"tout", bdShown:false, souhaits:[], noelView:"autres"
+    annonces:[], loaded:new Set(), agf:"tout", bdShown:false, jeton:"", push:"", prev:{}, stats:null, souhaits:[], noelView:"autres"
   };
   const CATS = ["Maison","Santé","Urgences","Vacances","Pratique","Autre"];
   const EMOJIS = ["❤️","😂","😮","👏","😢"];
+  const APP_VERSION = "1.1";
   const COLORS = ["#2E6A5C","#C2693A","#7A5BA8","#2F6FA6","#A8476B","#6B7F2A","#B7862A"];
   const MOIS = ["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];
 
@@ -473,14 +499,15 @@ nav.tabs button[aria-selected="true"]{color:var(--accent);background:var(--tint)
       e.preventDefault();
       const v=input.value.trim(); if(!v){ input.focus(); return; }
       go.disabled=true; go.textContent="Vérification…"; err.textContent="";
-      S.code=v;
       try{
-        const j=await API.call("connexion");
-        ls.set("nid-code",v); S.isOwner=!!j.admin;
+        const j=await API.call("connexion",{code:v});
+        S.jeton=j.jeton; S.push=j.push||""; ls.set("nid-jeton",j.jeton); S.isOwner=!!j.admin;
+        input.value="";
         await boot();
       }catch(x){
-        S.code="";
         err.textContent = x.code==="code" ? "Ce code n'est pas reconnu. Demande-le à la famille."
+          : x.code==="bloque" ? "Trop d'essais. Réessaie dans 10 minutes."
+          : x.code==="config" ? "Le serveur n'a pas encore ses codes : l'administrateur doit les installer."
           : x.code==="reseau" ? "Pas de connexion internet." : "Le serveur ne répond pas. Réessaie dans un instant.";
         go.disabled=false; go.textContent="Entrer"; input.select();
       }
@@ -496,7 +523,7 @@ nav.tabs button[aria-selected="true"]{color:var(--accent);background:var(--tint)
       h("p",{class:"muted"},"Ton prénom signe tes messages, photos et réactions sur ce téléphone."),
       names.length?h("div",{class:"chips",style:"justify-content:center;margin-top:12px"},names.map(n=>h("button",{type:"button",class:"chip",onclick:()=>{input.value=n;}},n))):null,
       input, h("button",{class:"btn",type:"submit",style:"width:100%"},"C'est moi"));
-    form.addEventListener("submit",e=>{ e.preventDefault(); const v=input.value.trim(); if(!v){ input.focus(); return; } S.me=v; ls.set("nid-who",v); render(); });
+    form.addEventListener("submit",e=>{ e.preventDefault(); const v=input.value.trim(); if(!v){ input.focus(); return; } S.me=v; ls.set("nid-who",v); swMeta(); visite(true); render(); });
     view.replaceChildren(h("div",{class:"gate"},form)); input.focus();
   }
   // ---------- Dates à venir ----------
@@ -574,7 +601,7 @@ nav.tabs button[aria-selected="true"]{color:var(--accent);background:var(--tint)
     return h("article",{class:"card post"+(pinnedNow(p)?" pinned":"")}, avatar(p.auteur,contactPhotoFor(p.auteur)),
       h("div",{class:"body"},
         pinnedNow(p)?h("div",{class:"pin-tag"},p.anniversaire?"🎂 Anniversaire":"Épinglé"):null,
-        h("div",{class:"meta"},h("b",null,p.auteur||"Quelqu'un"),h("time",{datetime:p.date},rel(p.date))),
+        h("div",{class:"meta"},h("b",null,p.auteur||"Quelqu'un"),h("time",{datetime:p.date},rel(p.date)),isNew("fil",p.created_at,p.auteur)?h("span",{class:"new-tag"},"Nouveau"):null),
         p.texte?h("p",null,p.texte):null,
         photos.length?h("div",{class:"pgrid n"+photos.length},photos.map((id,i)=>h("button",{"aria-label":"Agrandir la photo",onclick:()=>lightbox(list,i)},h("img",{src:blob(id),alt:"",loading:"lazy"})))):null,
         reactBar, actions, cmtBlock));
@@ -582,6 +609,12 @@ nav.tabs button[aria-selected="true"]{color:var(--accent);background:var(--tint)
   function renderFil(){
     const parts=[];
     const nb=noelBanner(); if(nb) parts.push(nb);
+    if(pushSupporte() && S.push && Notification.permission==="default" && !ls.get("nid-notif-off")){
+      parts.push(h("div",{class:"notif-card"},h("span",{"aria-hidden":"true",style:"font-size:22px"},"🔔"),
+        h("p",null,"Reçois une alerte pour les anniversaires, les nouveaux messages et l'agenda."),
+        h("button",{class:"btn small",onclick:openNotifs},"Activer"),
+        h("button",{class:"x","aria-label":"Masquer",onclick:()=>{ ls.set("nid-notif-off","1"); render(); }},"×")));
+    }
     const today=new Date(); today.setHours(0,0,0,0);
     const soon=[...birthdaysBetween(today,new Date(today.getTime()+30*864e5)), ...eventsBetween(today,new Date(today.getTime()+14*864e5))]
       .sort((a,b)=>a.date<b.date?-1:1).slice(0,6);
@@ -1111,20 +1144,196 @@ nav.tabs button[aria-selected="true"]{color:var(--accent);background:var(--tint)
       }
       S.me=d.me; ls.set("nid-who",d.me);
       toast("Réglages enregistrés");
-    }, ()=>h("button",{type:"button",class:"btn ghost small",onclick:()=>logout("")},"Se déconnecter"));
+    }, bg=>h("div",{class:"stack",style:"gap:8px"},
+        h("div",{class:"row"},
+          h("button",{type:"button",class:"btn ghost small",onclick:()=>{ bg.remove(); openNotifs(); }},"🔔 Notifications"),
+          S.isOwner?h("button",{type:"button",class:"btn ghost small",onclick:()=>{ bg.remove(); S.tab="stats"; S.stats=null; render(); window.scrollTo(0,0); }},"📊 Statistiques"):null,
+          h("button",{type:"button",class:"btn ghost small",onclick:()=>logout("")},"Se déconnecter")),
+        h("span",{class:"muted",style:"font-size:12px"},"Version "+APP_VERSION+(S.serveur?" · serveur v"+S.serveur:""))));
   }
   function logout(msg){
-    ls.del("nid-code"); S.code=""; S.cfgLoaded=false; S.unlocked=false; S.isOwner=false;
+    ls.del("nid-jeton"); ls.del("nid-cache"); S.jeton=""; S.cfgLoaded=false; S.unlocked=false; S.isOwner=false;
+    swMeta(true);
     if(S.timer){ clearInterval(S.timer); S.timer=null; }
     document.querySelectorAll(".sheet-bg,.lightbox").forEach(n=>n.remove());
     render(); if(msg) toast(msg);
+  }
+
+  // ---------- Visites (pour les statistiques de l'administrateur) ----------
+  function visite(force){
+    if(!S.me || !S.jeton) return;
+    const last=Number(ls.get("nid-visite")||0);
+    if(!force && Date.now()-last<6*3600e3) return;
+    ls.set("nid-visite",String(Date.now()));
+    const ua=navigator.userAgent, app=/iPhone|iPad|iPod/.test(ua)?"iPhone":/Android/.test(ua)?"Android":"Ordinateur";
+    API.call("visite",{prenom:S.me,appareil:app}).catch(()=>{});
+  }
+
+  // ---------- Notifications push ----------
+  function pushSupporte(){ return "serviceWorker" in navigator && "PushManager" in window && "Notification" in window; }
+  function b64uOctets(s){ s=s.replace(/-/g,"+").replace(/_/g,"/"); while(s.length%4) s+="="; const b=atob(s); return Uint8Array.from(b,c=>c.charCodeAt(0)); }
+  function prefsNotif(){ try{ return Object.assign({anniversaires:true,publications:true,agenda:true},JSON.parse(ls.get("nid-notif-prefs")||"{}")); }catch(e){ return {anniversaires:true,publications:true,agenda:true}; } }
+  // Le service worker lit l'adresse du serveur et le jeton ici pour afficher le texte des alertes
+  function swMeta(efface){
+    if(!("caches" in window)) return;
+    caches.open("nid-meta").then(c=> efface ? c.delete("/__nid/meta")
+      : c.put("/__nid/meta",new Response(JSON.stringify({url:API.url,jeton:S.jeton,me:S.me})))).catch(()=>{});
+  }
+  async function abonnementActuel(){
+    if(!pushSupporte()) return null;
+    try{ const reg=await navigator.serviceWorker.ready; return await reg.pushManager.getSubscription(); }catch(e){ return null; }
+  }
+  async function syncAbonnement(){
+    if(!pushSupporte() || Notification.permission!=="granted" || !S.push) return;
+    if(ls.get("nid-abo-sync")===ymd(new Date())) return;
+    const sub=await abonnementActuel(); if(!sub) return;
+    try{ await API.call("abonner",{abonnement:sub.toJSON(),prenom:S.me,prefs:prefsNotif()}); ls.set("nid-abo-sync",ymd(new Date())); }catch(e){}
+  }
+  async function openNotifs(){
+    const bg=h("div",{class:"sheet-bg",onclick:e=>{ if(e.target===bg) bg.remove(); }});
+    const box=h("div",{class:"sheet",role:"dialog","aria-label":"Notifications"});
+    bg.append(box); document.body.append(bg);
+    const fermer=h("button",{type:"button",class:"btn ghost",onclick:()=>bg.remove()},"Fermer");
+    box.append(h("h2",null,"🔔 Notifications"));
+    const ios=/iPhone|iPad|iPod/.test(navigator.userAgent);
+    const installee=window.matchMedia("(display-mode: standalone)").matches || navigator.standalone===true;
+    if(!pushSupporte() || (ios && !installee)){
+      box.append(h("p",{class:"muted"}, ios
+        ? "Sur iPhone, les notifications marchent seulement quand l'app est installée : dans Safari, Partager › Sur l'écran d'accueil, puis ouvre Le Nid depuis son icône et reviens ici (iOS 16.4 ou plus récent)."
+        : "Ce navigateur ne gère pas les notifications. Essaie avec Chrome, Edge ou Firefox, ou installe l'app sur l'écran d'accueil."),
+        h("div",{class:"row",style:"justify-content:flex-end"},fermer));
+      return;
+    }
+    if(!S.push){
+      box.append(h("p",{class:"muted"},"Le serveur n'a pas encore les notifications. L'administrateur doit mettre à jour le serveur et exécuter « installerAutomatismes »."),
+        h("div",{class:"row",style:"justify-content:flex-end"},fermer));
+      return;
+    }
+    if(Notification.permission==="denied"){
+      box.append(h("p",{class:"muted"},"Les notifications sont bloquées pour Le Nid sur ce téléphone. Réautorise-les dans les réglages du téléphone (ou du navigateur), section Notifications, puis reviens ici."),
+        h("div",{class:"row",style:"justify-content:flex-end"},fermer));
+      return;
+    }
+    const prefs=prefsNotif();
+    const line=(k,t,sub)=>{ const id="np-"+k, cb=h("input",{type:"checkbox",id}); cb.checked=prefs[k]!==false;
+      cb.addEventListener("change",()=>{ prefs[k]=cb.checked; });
+      return h("label",{class:"checkline",for:id},cb,h("div",null,h("b",null,t),h("small",null,sub))); };
+    const err=h("div",{class:"err"});
+    let sub=await abonnementActuel();
+    const go=h("button",{type:"button",class:"btn"},sub?"Enregistrer":"Activer sur ce téléphone");
+    const off=sub?h("button",{type:"button",class:"btn ghost small"},"Désactiver"):null;
+    box.append(
+      h("p",{class:"muted",style:"margin:0 0 6px"},sub?"Les notifications sont activées sur ce téléphone. Choisis ce que tu veux recevoir :":"Choisis ce que tu veux recevoir sur ce téléphone :"),
+      line("anniversaires","Anniversaires","Le matin du jour J"),
+      line("publications","Nouveaux messages et photos","Quand quelqu'un publie dans le fil ou un album"),
+      line("agenda","Agenda","Nouvel événement, et rappel la veille"),
+      err, h("div",{class:"row",style:"justify-content:space-between;margin-top:12px"},off||h("span"),h("div",{class:"row"},fermer,go)));
+    go.addEventListener("click",async()=>{
+      go.disabled=true; go.textContent="Activation…"; err.textContent="";
+      try{
+        const perm=await Notification.requestPermission();
+        if(perm!=="granted"){ err.textContent="Autorisation refusée : les notifications restent désactivées."; go.disabled=false; go.textContent="Activer sur ce téléphone"; return; }
+        const reg=await navigator.serviceWorker.ready;
+        const cle=b64uOctets(S.push);
+        sub=await reg.pushManager.getSubscription();
+        if(sub && sub.options && sub.options.applicationServerKey){
+          const a=new Uint8Array(sub.options.applicationServerKey);
+          if(a.length!==cle.length || a.some((v,i)=>v!==cle[i])){ await sub.unsubscribe(); sub=null; }
+        }
+        if(!sub) sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:cle});
+        await API.call("abonner",{abonnement:sub.toJSON(),prenom:S.me,prefs});
+        ls.set("nid-notif-prefs",JSON.stringify(prefs)); ls.set("nid-abo-sync",ymd(new Date())); swMeta();
+        bg.remove(); toast("Notifications activées 🔔"); render();
+      }catch(x){
+        err.textContent = x && x.code ? "Le serveur n'a pas enregistré l'abonnement. Réessaie dans un instant."
+          : "Ce téléphone n'a pas pu activer les notifications."+(x&&x.message?" ("+x.message+")":"");
+        go.disabled=false; go.textContent="Réessayer";
+      }
+    });
+    if(off) off.addEventListener("click",async()=>{
+      off.disabled=true;
+      try{ const s2=await abonnementActuel(); if(s2){ await API.call("desabonner",{endpoint:s2.endpoint}).catch(()=>{}); await s2.unsubscribe(); } }catch(e){}
+      bg.remove(); toast("Notifications désactivées sur ce téléphone"); render();
+    });
+  }
+
+  // ---------- Statistiques (administrateur) ----------
+  function fmtOctets(o){ return o>=1e9?(o/1e9).toFixed(2).replace(".",",")+" Go":(o/1e6).toFixed(1).replace(".",",")+" Mo"; }
+  function semaineDe(d){ const x=new Date(d); x.setHours(0,0,0,0); x.setDate(x.getDate()-((x.getDay()+6)%7)); return x; }
+  function chartSemaines(st){
+    const nb=12, debut=semaineDe(new Date(Date.now()-(nb-1)*7*864e5));
+    const weeks=[...Array(nb)].map((_,i)=>({d:new Date(debut.getTime()+i*7*864e5),n:0}));
+    [].concat(st.contenus.posts,st.contenus.comments,st.contenus.photos).forEach(x=>{
+      const t=Date.parse(x.d); if(isNaN(t)) return; const i=Math.floor((semaineDe(t)-debut)/(7*864e5)+.01); if(i>=0&&i<nb) weeks[i].n++; });
+    const W=360,H=170,L=28,R=6,T=10,B=24, max=Math.max(4,...weeks.map(w=>w.n));
+    const step=Math.ceil(max/4), top=step*4, cw=(W-L-R)/nb, bw=Math.min(20,cw-4);
+    const y=v=>T+(H-T-B)*(1-v/top);
+    let g="";
+    for(let k=0;k<=4;k++){ const v=k*step; g+='<line class="grid" x1="'+L+'" x2="'+(W-R)+'" y1="'+y(v)+'" y2="'+y(v)+'"/><text x="'+(L-6)+'" y="'+(y(v)+4)+'" text-anchor="end">'+v+'</text>'; }
+    weeks.forEach((w,i)=>{
+      const x=L+i*cw+(cw-bw)/2, lab=w.d.toLocaleDateString("fr-FR",{day:"numeric",month:"short"});
+      if(w.n){ const hgt=y(0)-y(w.n), r=Math.min(4,hgt);
+        g+='<path class="bar" d="M'+x+','+y(0)+'V'+(y(w.n)+r)+'Q'+x+','+y(w.n)+' '+(x+r)+','+y(w.n)+'H'+(x+bw-r)+'Q'+(x+bw)+','+y(w.n)+' '+(x+bw)+','+(y(w.n)+r)+'V'+y(0)+'Z"><title>Semaine du '+lab+' : '+w.n+' contribution'+(w.n>1?'s':'')+'</title></path>'; }
+      if((nb-1-i)%3===0) g+= i===nb-1 ? '<text x="'+(x+bw)+'" y="'+(H-8)+'" text-anchor="end">'+lab+'</text>' : '<text x="'+(x+bw/2)+'" y="'+(H-8)+'" text-anchor="middle">'+lab+'</text>';
+    });
+    const wrap=h("div",{class:"chart-wrap"}); wrap.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Contributions par semaine sur 12 semaines">'+g+'</svg>';
+    const tbl=h("table",{class:"stbl"},h("thead",null,h("tr",null,h("th",null,"Semaine du"),h("th",{class:"num"},"Contributions"))),
+      h("tbody",null,weeks.map(w=>h("tr",null,h("td",null,w.d.toLocaleDateString("fr-FR",{day:"numeric",month:"long"})),h("td",{class:"num"},w.n)))));
+    return [wrap, h("details",null,h("summary",{class:"muted",style:"font-size:13px;cursor:pointer"},"Voir les chiffres"),tbl)];
+  }
+  async function chargerStats(){
+    try{ S.stats=await API.call("stats"); S.statsAt=new Date(); }
+    catch(x){ S.stats={erreur:x.code}; }
+    if(S.tab==="stats") render();
+  }
+  function renderStats(){
+    const head=h("div",{class:"sec-head"},h("div",null,h("h2",null,"Statistiques"),
+      h("div",{class:"muted",style:"font-size:13px"},S.statsAt&&S.stats&&!S.stats.erreur?"Mises à jour à "+S.statsAt.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"}):"Réservé à l'administrateur")),
+      h("button",{class:"btn ghost small",onclick:()=>{ S.stats=null; render(); }},"Actualiser"));
+    const back=h("button",{class:"back",onclick:()=>{ S.tab="fil"; render(); window.scrollTo(0,0); }},"‹ Retour à l'app");
+    if(!S.stats){ view.replaceChildren(back,head,h("div",{class:"empty"},h("b",null,"Calcul en cours…"),"Le serveur compte les messages, les photos et les visites.")); chargerStats(); return; }
+    if(S.stats.erreur){ view.replaceChildren(back,head,h("div",{class:"empty"},h("b",null,"Statistiques indisponibles"),
+      S.stats.erreur==="action"?"Mets à jour le serveur (nouveau Code.gs) pour activer les statistiques.":"Le serveur ne répond pas. Réessaie avec « Actualiser ».")); return; }
+    const st=S.stats, now=Date.now();
+    const actifs=st.visites.filter(v=>now-Date.parse(v.derniere)<30*864e5).length;
+    const kpi=(n,t)=>h("div",{class:"kpi"},h("b",null,n),h("span",null,t));
+    const people={};
+    const P=n=>{ const k=keyOf(n); return people[k]=people[k]||{nom:n,visites:0,derniere:"",posts:0,photos:0,comments:0,app:"",notif:false}; };
+    st.visites.forEach(v=>{ const p=P(v.prenom); p.visites=v.nb||0; p.derniere=v.derniere||""; p.app=v.appareil||""; });
+    st.contenus.posts.forEach(x=>{ if(x.a && x.a!=="Le Nid") P(x.a).posts++; });
+    st.contenus.photos.forEach(x=>{ if(x.a) P(x.a).photos++; });
+    st.contenus.comments.forEach(x=>{ if(x.a) P(x.a).comments++; });
+    st.abonnes.forEach(a=>{ if(a.prenom) P(a.prenom).notif=true; });
+    const rows=Object.values(people).sort((a,b)=>(b.derniere||"").localeCompare(a.derniere||""));
+    const quand=iso=>{ if(!iso) return "—"; const d=(now-Date.parse(iso))/864e5; return d<1?"aujourd'hui":d<2?"hier":"il y a "+Math.floor(d)+" j"; };
+    const tot=st.totaux, quota=15e9, pct=Math.min(100,st.stockage.octets/quota*100);
+    view.replaceChildren(back,head,
+      h("div",{class:"kpis"},kpi(actifs,"membres actifs (30 jours)"),kpi(tot.messages,"messages"),kpi(tot.photos,"photos"),kpi(st.abonnes.length,"téléphones avec notifications")),
+      h("section",{class:"card stack",style:"gap:8px"},h("h3",{style:"font-size:17px"},"Activité par semaine"),
+        h("p",{class:"muted",style:"margin:0;font-size:13px"},"Messages, commentaires et photos publiés, sur les 12 dernières semaines."),chartSemaines(st)),
+      h("section",{class:"card stack",style:"gap:8px"},h("h3",{style:"font-size:17px"},"Par personne"),
+        rows.length?h("div",{style:"overflow-x:auto"},h("table",{class:"stbl"},
+          h("thead",null,h("tr",null,h("th",null,"Prénom"),h("th",null,"Dernière visite"),h("th",{class:"num"},"Visites"),h("th",{class:"num"},"Messages"),h("th",{class:"num"},"Photos"),h("th",{class:"num"},"Comm."),h("th",null,"Alertes"))),
+          h("tbody",null,rows.map(p=>h("tr",null,h("td",null,h("b",{style:"font-weight:600"},p.nom),p.app?h("div",{class:"muted",style:"font-size:12px"},p.app):null),
+            h("td",null,quand(p.derniere)),h("td",{class:"num"},p.visites),h("td",{class:"num"},p.posts),h("td",{class:"num"},p.photos),h("td",{class:"num"},p.comments),h("td",null,p.notif?"Oui":"—"))))))
+          :h("p",{class:"muted",style:"margin:0"},"Pas encore de visite enregistrée.")),
+      h("section",{class:"card stack",style:"gap:8px"},h("h3",{style:"font-size:17px"},"Contenu de l'app"),
+        h("div",{class:"kpis"},kpi(tot.albums,"albums"),kpi(tot.contacts,"fiches d'annuaire"),kpi(tot.evenements,"événements"),kpi(tot.recettes,"recettes"),kpi(tot.commentaires,"commentaires"),kpi(tot.souhaits,"idées de Noël"))),
+      h("section",{class:"card stack",style:"gap:8px"},h("h3",{style:"font-size:17px"},"Stockage et sauvegarde"),
+        h("div",{class:"row",style:"justify-content:space-between"},h("span",null,"Photos dans ton Drive"),h("b",{style:"font-variant-numeric:tabular-nums"},fmtOctets(st.stockage.octets)+" · "+st.stockage.fichiers+" fichiers")),
+        h("div",{class:"meter",role:"img","aria-label":pct.toFixed(1)+" % des 15 Go gratuits"},h("i",{style:"width:"+Math.max(pct,0.5)+"%"})),
+        h("p",{class:"muted",style:"margin:0;font-size:13px"},"Sur les 15 Go gratuits de ton compte Google, partagés avec Gmail et Google Photos."),
+        h("div",{class:"row",style:"justify-content:space-between"},h("span",null,"Dernière sauvegarde"),
+          h("b",null,st.sauvegarde?new Date(st.sauvegarde).toLocaleDateString("fr-FR",{day:"numeric",month:"long",year:"numeric"}):"aucune")),
+        st.sauvegarde?null:h("p",{class:"muted",style:"margin:0;font-size:13px"},"Exécute « installerAutomatismes » dans Apps Script pour activer la sauvegarde du 1er de chaque mois.")),
+      h("p",{class:"muted",style:"font-size:12px;text-align:center;margin:0"},"Version de l'app "+APP_VERSION+" · serveur v"+(st.version||"?")));
   }
 
   // ---------- Rendu ----------
   function render(){
     $("#famName").textContent = (S.cfg&&S.cfg.nom) || ls.get("nid-nom") || "Le Nid";
     if(!S.db) return;
-    if(!S.code){ $("#famSub").textContent="Espace privé de la famille"; return renderGate(); }
+    if(!S.jeton){ $("#famSub").textContent="Espace privé de la famille"; return renderGate(); }
     if(!S.cfgLoaded) return;
     if(!S.me){ $("#famSub").textContent="Espace privé de la famille"; return renderWho(); }
     $("#famSub").textContent = "Bonjour "+S.me;
@@ -1134,7 +1343,10 @@ nav.tabs button[aria-selected="true"]{color:var(--accent);background:var(--tint)
     document.querySelector('nav.tabs button[data-tab="noel"]').hidden=!noelOn;
     if(S.tab==="noel" && !noelOn) S.tab="fil";
     document.querySelectorAll("nav.tabs button").forEach(b=>b.setAttribute("aria-selected",String(b.dataset.tab===S.tab)));
+    if(S.prev[S.tab]===undefined) enterTab(S.tab);
+    if(S.tab==="stats"){ if(!S.isOwner) S.tab="fil"; else { renderStats(); updateDots(); return; } }
     ({photos:renderPhotos,agenda:renderAgenda,famille:renderFamille,plus:renderPlus,noel:renderNoel}[S.tab]||renderFil)();
+    updateDots();
     setTimeout(checkBirthdays,300);
   }
 
@@ -1232,8 +1444,34 @@ nav.tabs button[aria-selected="true"]{color:var(--accent);background:var(--tint)
 
   document.querySelectorAll("nav.tabs button").forEach(b=>b.addEventListener("click",()=>{
     if(S.tab===b.dataset.tab){ S.albumOpen=null; S.recipeOpen=null; }
-    S.tab=b.dataset.tab; ls.set("nid-tab",S.tab); render(); window.scrollTo(0,0);
+    S.tab=b.dataset.tab; ls.set("nid-tab",S.tab); enterTab(S.tab); render(); window.scrollTo(0,0);
   }));
+  // ---------- Nouveautés : pastilles sur les onglets ----------
+  function sourcesOf(tab){
+    const mine=a=>isMe(a||"");
+    const L=(arr,auth)=>arr.filter(x=>!mine(auth(x))).map(x=>x.created_at||"");
+    if(tab==="fil") return L(S.posts,p=>p.auteur).concat(L(S.comments,c=>c.auteur));
+    if(tab==="photos") return L(S.photos,p=>p.auteur).concat(L(S.albums,a=>a.auteur));
+    if(tab==="agenda") return L(S.events,e=>e.auteur);
+    if(tab==="plus") return L(S.recettes,r=>r.auteur);
+    if(tab==="noel") return L(wishesYear().filter(w=>!isMe(w.pour)),w=>w.ajoutePar);
+    return [];
+  }
+  function seenOf(tab){ let v=ls.get("nid-vu-"+tab); if(!v){ v=new Date().toISOString(); ls.set("nid-vu-"+tab,v); } return v; }
+  function enterTab(tab){ S.prev[tab]=seenOf(tab); ls.set("nid-vu-"+tab,new Date().toISOString()); }
+  function isNew(tab,iso,auteur){ return !!S.prev[tab] && !!iso && iso>S.prev[tab] && !isMe(auteur||""); }
+  function updateDots(){
+    let total=0;
+    document.querySelectorAll("nav.tabs button").forEach(b=>{
+      const tab=b.dataset.tab; let d=b.querySelector(".dot-new");
+      if(tab===S.tab){ ls.set("nid-vu-"+tab,new Date().toISOString()); if(d) d.remove(); return; }
+      const seen=seenOf(tab), n=sourcesOf(tab).filter(x=>x>seen).length;
+      total+=n;
+      if(n && !d){ d=h("span",{class:"dot-new","aria-label":"nouveau"}); b.append(d); }
+      if(!n && d) d.remove();
+    });
+    try{ if(navigator.setAppBadge){ total?navigator.setAppBadge(total):navigator.clearAppBadge(); } }catch(e){}
+  }
   $("#settingsBtn").addEventListener("click",openSettings);
 
   // ---------- Serveur Google (Apps Script) ----------
@@ -1241,7 +1479,7 @@ nav.tabs button[aria-selected="true"]{color:var(--accent);background:var(--tint)
     url: (((window.NID_CONFIG||{}).SERVEUR_URL)||"").trim(),
     async call(action, data){
       let r, j;
-      try{ r = await fetch(API.url,{method:"POST",body:JSON.stringify(Object.assign({code:S.code,action},data||{}))}); }
+      try{ r = await fetch(API.url,{method:"POST",body:JSON.stringify(Object.assign({jeton:S.jeton,action},data||{}))}); }
       catch(e){ throw {code:"reseau"}; }
       try{ j = await r.json(); }catch(e){ throw {code:"serveur"}; }
       if(!j.ok) throw {code:j.erreur||"serveur", detail:j.detail, ligne:j.ligne};
@@ -1290,25 +1528,36 @@ nav.tabs button[aria-selected="true"]{color:var(--accent);background:var(--tint)
     return {
       collection:name=>query(name),
       doc:path=>{ const i=path.indexOf("/"); return docRef(path.slice(0,i),path.slice(i+1)); },
-      async refresh(){
-        const j=await API.call("charger");
+      hydrate(j){
         TABLES.forEach(t=>T[t]=(j.tables&&j.tables[t])||[]);
-        cfg=j.reglages||{}; S.isOwner=!!j.admin; loaded=true;
+        cfg=j.reglages||{}; S.isOwner=!!j.admin; S.push=j.push||S.push; S.serveur=j.version||""; loaded=true;
         cfgSubs.forEach(f=>f({exists:true,data:()=>cfg}));
         TABLES.forEach(emit);
+      },
+      async refresh(){
+        const j=await API.call("charger");
+        this.hydrate(j);
+        ls.set("nid-cache",JSON.stringify({tables:j.tables,reglages:j.reglages,admin:j.admin,push:j.push,version:j.version}));
       }
     };
   }
   async function boot(){
-    S.code = S.code || ls.get("nid-code") || "";
-    if(!S.code){ render(); return; }
+    ls.del("nid-code"); // ancienne version : le code n'est plus gardé sur le téléphone
+    S.jeton = S.jeton || ls.get("nid-jeton") || "";
+    if(!S.jeton){ render(); return; }
+    // Ouverture instantanée : on affiche les dernières données connues, puis on met à jour
+    let cache=null; try{ cache=JSON.parse(ls.get("nid-cache")||"null"); }catch(e){}
+    if(cache && !S.cfgLoaded){ S.db.hydrate(cache); S.unlocked=true; }
     if(!S.cfgLoaded) view.replaceChildren(h("div",{class:"empty"},h("b",null,"Ouverture du nid…"),"Chargement des messages et des photos."));
     try{
       await S.db.refresh();
       S.unlocked=true;
       if(!S.timer) S.timer=setInterval(()=>{ if(document.visibilityState==="visible") quietRefresh(); },30000);
+      swMeta(); visite(false); syncAbonnement();
     }catch(x){
       if(x.code==="code"){ logout("Ce code n'est plus valable : demande le nouveau code familial."); return; }
+      if(S.cfgLoaded){ toast(x.code==="reseau"?"Hors connexion : dernières données affichées":"Serveur injoignable : dernières données affichées");
+        if(!S.timer) S.timer=setInterval(()=>{ if(document.visibilityState==="visible") quietRefresh(); },30000); return; }
       view.replaceChildren(h("div",{class:"empty"},h("b",null,"Impossible de joindre le serveur"),
         x.code==="reseau"?"Vérifie ta connexion internet.":"Le serveur Google ne répond pas pour l'instant.",
         h("div",{style:"margin-top:12px"},h("button",{class:"btn",onclick:()=>boot()},"Réessayer"))));
@@ -1316,7 +1565,7 @@ nav.tabs button[aria-selected="true"]{color:var(--accent);background:var(--tint)
   }
   let refreshing=false;
   async function quietRefresh(){
-    if(refreshing || !S.code || !S.unlocked) return;
+    if(refreshing || !S.jeton || !S.unlocked) return;
     refreshing=true;
     try{ await S.db.refresh(); }catch(x){ if(x.code==="code") logout("Le code familial a changé : demande le nouveau code."); }
     refreshing=false;
@@ -1330,6 +1579,10 @@ nav.tabs button[aria-selected="true"]{color:var(--accent);background:var(--tint)
       $("#famSub").textContent="Configuration"; return;
     }
     S.db=makeDb(); S.assets=true;
+    const ancre=(location.hash||"").slice(1);
+    if(["fil","photos","agenda","famille","plus","noel"].includes(ancre)){ S.tab=ancre; ls.set("nid-tab",ancre); history.replaceState(null,"",location.pathname); }
+    window.addEventListener("hashchange",()=>{ const t=(location.hash||"").slice(1);
+      if(["fil","photos","agenda","famille","plus","noel"].includes(t)){ S.tab=t; ls.set("nid-tab",t); enterTab(t); history.replaceState(null,"",location.pathname); render(); window.scrollTo(0,0); } });
     const sub=(name,q)=>q.onSnapshot(s=>{ S[name]=s.docs.map(d=>({id:d.id,...d.data()})); S.loaded.add(name); scheduleRender(); });
     S.db.doc("config/famille").onSnapshot(snap=>{
       S.cfg = snap.data()||{}; S.cfgLoaded=true; ls.set("nid-nom",S.cfg.nom||"Le Nid");
