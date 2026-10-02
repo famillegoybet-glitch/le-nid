@@ -1,0 +1,9 @@
+LE NID - fichiers de l'application (version Google Drive)
+
+1. Ouvre config.js avec un éditeur de texte et colle l'adresse de ton serveur
+   Google entre les guillemets (elle finit par /exec). Enregistre.
+2. Mets TOUS ces fichiers sur GitHub (étape 7 du guide PDF).
+3. Pour les mises à jour : renvoie les nouveaux fichiers SAUF config.js.
+
+Fichiers : index.html (l'app), config.js (ton adresse), manifest.json et
+sw.js (installation sur le téléphone), icon-192.png et icon-512.png (icône).
