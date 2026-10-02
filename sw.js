@@ -1,7 +1,7 @@
 // Le Nid : ouverture rapide, installation et notifications.
 // Le réseau passe toujours en premier, pour que chaque mise à jour publiée
 // sur GitHub arrive à la prochaine ouverture.
-const VERSION = "le-nid-2";
+const VERSION = "le-nid-3";
 const META = "nid-meta";
 const SHELL = ["./", "index.html", "config.js", "manifest.json", "icon-192.png", "icon-512.png"];
 

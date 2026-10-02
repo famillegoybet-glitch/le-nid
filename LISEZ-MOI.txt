@@ -1,4 +1,4 @@
-LE NID - fichiers de l'application (version 1.1, Google Drive)
+LE NID - fichiers de l'application (version 1.2, Google Drive)
 
 Mise à jour : mets sur GitHub tous ces fichiers SAUF config.js (garde le tien).
 Nouvelle installation : ouvre config.js, colle l'adresse de ton serveur Google
